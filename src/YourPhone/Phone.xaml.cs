@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using MaterialDesignThemes.Wpf;
 
 namespace YourPhone
@@ -32,7 +34,9 @@ namespace YourPhone
             if (Phone.Unlocked) {
                 LockIcon.Kind = PackIconKind.LockOpen;
             } else {
-                // Todo: Show lock animation
+                var shakeStoryboard = (Storyboard)LockIcon.Resources["ShakeStoryboard"];
+                Storyboard.SetTarget(shakeStoryboard.Children.ElementAt(0) as DoubleAnimationUsingKeyFrames, LockIcon);
+                shakeStoryboard.Begin();
             }
 
             PinTextBox.Text = String.Empty;

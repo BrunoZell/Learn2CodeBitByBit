@@ -14,7 +14,21 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
-        <materialDesign:PackIcon x:Name="LockIcon" Kind="Lock" Height="130" Width="96" HorizontalAlignment="Center" Margin="0,132,0,0" MouseDown="LockIcon_MouseDown"/>
+        <materialDesign:PackIcon x:Name="LockIcon" Kind="Lock" Height="130" Width="96" HorizontalAlignment="Center" Margin="0,132,0,0" MouseDown="LockIcon_MouseDown">
+            <materialDesign:PackIcon.Resources>
+                <Storyboard x:Key="ShakeStoryboard">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" RepeatBehavior="1x">
+                        <SplineDoubleKeyFrame KeyTime ="00:00:00.1000000" Value ="-4"/>
+                        <SplineDoubleKeyFrame KeyTime ="00:00:00.2000000" Value ="0"/>
+                        <SplineDoubleKeyFrame KeyTime ="00:00:00.3000000" Value ="4"/>
+                        <SplineDoubleKeyFrame KeyTime ="00:00:00.5000000" Value ="0"/>
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </materialDesign:PackIcon.Resources>
+            <materialDesign:PackIcon.RenderTransform>
+                <TranslateTransform X="0" Y="0" />
+            </materialDesign:PackIcon.RenderTransform>
+        </materialDesign:PackIcon>
 
         <materialDesign:Card Padding="32" Margin="16,426,16,0">
             <TextBox x:Name="PinTextBox" materialDesign:HintAssist.Hint="Pin" TextChanged="PinTextBox_TextChanged" PreviewTextInput="PinTextBox_PreviewTextInput" />
