@@ -1,5 +1,7 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using MaterialDesignThemes.Wpf;
 
 namespace YourPhone
 {
@@ -15,7 +17,29 @@ namespace YourPhone
 
         private void PinTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (PinTextBox.Text.Length < 4)
+                return;
 
+            if (!UInt16.TryParse(PinTextBox.Text, out ushort pin)) {
+                PinTextBox.Text = String.Empty;
+                return;
+            }
+
+            Phone.Unlocked = false;
+            LockScreen.UnlockPhone(pin);
+
+            if (Phone.Unlocked) {
+                LockIcon.Kind = PackIconKind.LockOpen;
+            } else {
+                // Todo: Show lock animation
+            }
+
+            PinTextBox.Text = String.Empty;
+        }
+
+        private void LockIcon_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            LockIcon.Kind = PackIconKind.Lock;
         }
     }
 }
