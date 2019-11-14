@@ -20,16 +20,21 @@ namespace YourPhone
 
         private void PinTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (PinTextBox.Text.Length < 4)
+            if (PinTextBox.Text.Length < 6)
                 return;
 
-            if (!UInt16.TryParse(PinTextBox.Text, out ushort pin)) {
+            if (!UInt16.TryParse(PinTextBox.Text.AsSpan().Slice(0, 1), out ushort digit1) ||
+                !UInt16.TryParse(PinTextBox.Text.AsSpan().Slice(1, 1), out ushort digit2) ||
+                !UInt16.TryParse(PinTextBox.Text.AsSpan().Slice(2, 1), out ushort digit3) ||
+                !UInt16.TryParse(PinTextBox.Text.AsSpan().Slice(3, 1), out ushort digit4) ||
+                !UInt16.TryParse(PinTextBox.Text.AsSpan().Slice(4, 1), out ushort digit5) ||
+                !UInt16.TryParse(PinTextBox.Text.AsSpan().Slice(5, 1), out ushort digit6)) {
                 PinTextBox.Text = String.Empty;
                 return;
             }
 
             Phone.Unlocked = false;
-            LockScreen.UnlockPhone(pin);
+            LockScreen.UnlockPhone(digit1, digit2, digit3, digit4, digit5, digit6);
 
             if (Phone.Unlocked) {
                 LockIcon.Kind = PackIconKind.LockOpen;
