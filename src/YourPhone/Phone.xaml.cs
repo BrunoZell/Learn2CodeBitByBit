@@ -42,7 +42,8 @@ namespace YourPhone
             if (e.Key != Key.Return)
                 return;
 
-            LockScreen.SetPassword(SetPinTextBox.Text);
+            LockScreen.SetPassword(PinTextBox.Text, SetPinTextBox.Text);
+            PinTextBox.Text = String.Empty;
             SetPinTextBox.Text = String.Empty;
         }
 

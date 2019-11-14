@@ -10,9 +10,9 @@ public static class LockScreen
 
     }
 
-    public static void SetPassword(string newPassword)
+    public static void SetPassword(string oldPassword, string newPassword)
     {
-        // Todo: Overwrite the current password with newPassword
+        // Todo: Overwrite the current password with newPassword, but only if the current password matches oldPassword
     }
 
     public static class Memory
