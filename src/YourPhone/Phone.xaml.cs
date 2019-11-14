@@ -20,7 +20,7 @@ namespace YourPhone
 
         private void PinTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (PinTextBox.Text.Length < 6)
+            if (PinTextBox.Text.Length < 8)
                 return;
 
             if (!TryGetDigit(PinTextBox.Text.AsSpan().Slice(0, 1), out ushort digit1) ||
@@ -28,13 +28,15 @@ namespace YourPhone
                 !TryGetDigit(PinTextBox.Text.AsSpan().Slice(2, 1), out ushort digit3) ||
                 !TryGetDigit(PinTextBox.Text.AsSpan().Slice(3, 1), out ushort digit4) ||
                 !TryGetDigit(PinTextBox.Text.AsSpan().Slice(4, 1), out ushort digit5) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(5, 1), out ushort digit6)) {
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(5, 1), out ushort digit6) ||
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(6, 1), out ushort digit7) ||
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(7, 1), out ushort digit8)) {
                 PinTextBox.Text = String.Empty;
                 return;
             }
 
             Phone.Unlocked = false;
-            LockScreen.UnlockPhone(digit1, digit2, digit3, digit4, digit5, digit6);
+            LockScreen.UnlockPhone(new[] { digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8 });
 
             if (Phone.Unlocked) {
                 LockIcon.Kind = PackIconKind.LockOpen;
