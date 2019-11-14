@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using MaterialDesignThemes.Wpf;
 
@@ -18,9 +18,9 @@ namespace YourPhone
             InitializeComponent();
         }
 
-        private void PinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void PinTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (PinTextBox.Text.Length < 8)
+            if (e.Key != Key.Return)
                 return;
 
             Phone.Unlocked = false;
@@ -37,13 +37,22 @@ namespace YourPhone
             PinTextBox.Text = String.Empty;
         }
 
-        private void PinTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void SetPinTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Return)
+                return;
+
+            LockScreen.SetPassword(SetPinTextBox.Text);
+            SetPinTextBox.Text = String.Empty;
+        }
+
+        private void PinTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var regex = new Regex("[^0-9a-zA-Z]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void LockIcon_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void LockIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             LockIcon.Kind = PackIconKind.Lock;
         }

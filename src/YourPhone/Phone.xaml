@@ -31,7 +31,10 @@
         </materialDesign:PackIcon>
 
         <materialDesign:Card Padding="32" Margin="16,426,16,0">
-            <TextBox x:Name="PinTextBox" materialDesign:HintAssist.Hint="Pin" TextChanged="PinTextBox_TextChanged" PreviewTextInput="PinTextBox_PreviewTextInput" />
+            <StackPanel>
+                <TextBox x:Name="PinTextBox" materialDesign:HintAssist.Hint="Password" KeyDown="PinTextBox_KeyDown" PreviewTextInput="PinTextBox_PreviewTextInput"/>
+                <TextBox x:Name="SetPinTextBox" materialDesign:HintAssist.Hint="Set New Password" KeyDown="SetPinTextBox_KeyDown" PreviewTextInput="PinTextBox_PreviewTextInput" />
+            </StackPanel>
         </materialDesign:Card>
     </Grid>
 </Window>
