@@ -23,20 +23,8 @@ namespace YourPhone
             if (PinTextBox.Text.Length < 8)
                 return;
 
-            if (!TryGetDigit(PinTextBox.Text.AsSpan().Slice(0, 1), out char digit1) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(1, 1), out char digit2) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(2, 1), out char digit3) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(3, 1), out char digit4) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(4, 1), out char digit5) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(5, 1), out char digit6) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(6, 1), out char digit7) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(7, 1), out char digit8)) {
-                PinTextBox.Text = String.Empty;
-                return;
-            }
-
             Phone.Unlocked = false;
-            LockScreen.UnlockPhone(new[] { digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8 });
+            LockScreen.UnlockPhone(PinTextBox.Text);
 
             if (Phone.Unlocked) {
                 LockIcon.Kind = PackIconKind.LockOpen;
@@ -47,12 +35,6 @@ namespace YourPhone
             }
 
             PinTextBox.Text = String.Empty;
-
-            static bool TryGetDigit(ReadOnlySpan<char> chars, out char digit)
-            {
-                digit = chars[0];
-                return true;
-            }
         }
 
         private void PinTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
