@@ -23,14 +23,14 @@ namespace YourPhone
             if (PinTextBox.Text.Length < 8)
                 return;
 
-            if (!TryGetDigit(PinTextBox.Text.AsSpan().Slice(0, 1), out ushort digit1) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(1, 1), out ushort digit2) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(2, 1), out ushort digit3) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(3, 1), out ushort digit4) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(4, 1), out ushort digit5) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(5, 1), out ushort digit6) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(6, 1), out ushort digit7) ||
-                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(7, 1), out ushort digit8)) {
+            if (!TryGetDigit(PinTextBox.Text.AsSpan().Slice(0, 1), out char digit1) ||
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(1, 1), out char digit2) ||
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(2, 1), out char digit3) ||
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(3, 1), out char digit4) ||
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(4, 1), out char digit5) ||
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(5, 1), out char digit6) ||
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(6, 1), out char digit7) ||
+                !TryGetDigit(PinTextBox.Text.AsSpan().Slice(7, 1), out char digit8)) {
                 PinTextBox.Text = String.Empty;
                 return;
             }
@@ -48,30 +48,16 @@ namespace YourPhone
 
             PinTextBox.Text = String.Empty;
 
-            static bool TryGetDigit(ReadOnlySpan<char> chars, out ushort digit)
+            static bool TryGetDigit(ReadOnlySpan<char> chars, out char digit)
             {
-                if (UInt16.TryParse(chars, out digit))
-                    return true;
-
-                ushort? proposedDigit = chars[0] switch
-                {
-                    'a' => 10,
-                    'b' => 11,
-                    'c' => 12,
-                    'd' => 13,
-                    'e' => 14,
-                    'f' => 15,
-                    _ => default(ushort?)
-                };
-
-                digit = proposedDigit.GetValueOrDefault();
-                return proposedDigit.HasValue;
+                digit = chars[0];
+                return true;
             }
         }
 
         private void PinTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            var regex = new Regex("[^0-9a-f]+");
+            var regex = new Regex("[^0-9a-zA-Z]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
