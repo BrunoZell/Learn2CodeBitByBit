@@ -9,7 +9,6 @@ public static class LockScreen
         // If so, set Phone.Unlocked = true
         // Otherwise, set Phone.Unlocked = false
 
-        if (pin == 1234)
-            Phone.Unlocked = true;
+
     }
 }
