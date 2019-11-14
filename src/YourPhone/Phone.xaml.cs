@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
@@ -35,6 +36,12 @@ namespace YourPhone
             }
 
             PinTextBox.Text = String.Empty;
+        }
+
+        private void PinTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void LockIcon_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

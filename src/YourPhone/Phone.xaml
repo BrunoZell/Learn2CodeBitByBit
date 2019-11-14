@@ -17,7 +17,7 @@
         <materialDesign:PackIcon x:Name="LockIcon" Kind="Lock" Height="130" Width="96" HorizontalAlignment="Center" Margin="0,132,0,0" MouseDown="LockIcon_MouseDown"/>
 
         <materialDesign:Card Padding="32" Margin="16,426,16,0">
-            <TextBox x:Name="PinTextBox" materialDesign:HintAssist.Hint="Pin" TextChanged="PinTextBox_TextChanged" />
+            <TextBox x:Name="PinTextBox" materialDesign:HintAssist.Hint="Pin" TextChanged="PinTextBox_TextChanged" PreviewTextInput="PinTextBox_PreviewTextInput" />
         </materialDesign:Card>
     </Grid>
 </Window>
